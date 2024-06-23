@@ -1,3 +1,12 @@
+MT/data/
+__pycache__/
+data/
+QNLI/zTest/
+MT/zTest1/
+
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
