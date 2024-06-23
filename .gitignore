@@ -3,9 +3,9 @@ __pycache__/
 data/
 QNLI/zTest/
 MT/zTest1/
-
-
-
+src/MT/zTest1/
+src/QNLI/zTest/
+src/QNLI/finetuning/paper/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
