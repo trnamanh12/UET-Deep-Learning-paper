@@ -368,7 +368,6 @@ Average training loss: 0.18
 Average training loss: 0.09
 Training Accuracy: 0.99
 Validating Accuracy: 0.84
-Testing Accuracy: 0.83
 all of the result above with seed 264
 
 The following result apply seed = 25, as in the paper ICLR 2021

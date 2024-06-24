@@ -1,0 +1,55 @@
+When model is not fine_tuned ( model had been fine tuned on MTet )  
+
+BLEU score on valid : 62.5832159193795
+
+bs 8, optimizer = optim.AdamW(model.parameters(), lr=3e-4, eps=1e-6, betas=(0.9,0.98), weight_decay =0.00001)
+scheduler = get_linear_schedule_with_warmup(optimizer, 
+											num_warmup_steps=int(0.01*total_steps),
+											num_training_steps=total_steps)
+											
+======== Epoch 1 / 1 ========
+  Batch 200  of  512.    Elapsed: , Loss 0.5924925121353634
+  Batch 400  of  512.    Elapsed: , Loss 0.4475402319223209
+Average training loss: 0.41
+
+Train BLEU score: 79.49787844610934
+
+Valid BLEU score: 61.320531682080535
+Test BLEU score: 59.91576993096669									
+														
+
+optimizer = optim.AdamW(model.parameters(), lr=3e-4, weight_decay =0.00001), batch_size 8, epochs 1
+scheduler = get_linear_schedule_with_warmup(optimizer, 
+											num_warmup_steps=int(0.01*total_steps),
+											num_training_steps=total_steps)
+======== Epoch 1 / 1 ========
+  Batch 200  of  514.    Elapsed: , Loss 0.5935818063679026
+  Batch 400  of  514.    Elapsed: , Loss 0.4532800640845834
+Average training loss: 0.41
+
+Training BLEU score: 76.02721387568286
+Validating BLEU score: 63.009483124371
+Testing BLEU score: 58.91181079871489
+
+
+optimizer = optim.AdamW(model.parameters(), lr=3e-4, weight_decay =0.00001)
+epochs 3, batch_size 8, 
+scheduler = get_linear_schedule_with_warmup(optimizer, 
+											num_warmup_steps=int(0.01*total_steps),
+											num_training_steps=total_steps)
+======== Epoch 1 / 3 ========
+  Batch 200  of  514.    Elapsed: , Loss 0.7402004773788784
+  Batch 400  of  514.    Elapsed: , Loss 0.5467617989626906
+Average training loss: 0.50
+======== Epoch 2 / 3 ========
+  Batch 200  of  514.    Elapsed: , Loss 0.15832574424607243
+  Batch 400  of  514.    Elapsed: , Loss 0.1601032503413738
+Average training loss: 0.16
+======== Epoch 3 / 3 ========
+  Batch 200  of  514.    Elapsed: , Loss 0.048280138388016626
+  Batch 400  of  514.    Elapsed: , Loss 0.045040874270503954
+Average training loss: 0.04
+
+Training BLEU score: 93.1147815848084393.11
+Validating BLEU score: 59.9681215440471
+Testing BLEU score: 57.19523520778124
