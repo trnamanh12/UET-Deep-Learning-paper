@@ -152,7 +152,6 @@ Training Accuracy: 0.59
 
 Validating Accuracy: 0.54
 
-Test Accuracy: 0.56
 
 
 'normal' bs 8, 1 epochs
@@ -238,7 +237,7 @@ scheduler = get_linear_schedule_with_warmup(optimizer,
 											num_warmup_steps=int(0.06*total_steps),
 											num_training_steps=total_steps)
 											
-											======== Epoch 1 / 5 ========
+======== Epoch 1 / 5 ========
   Batch 500  of  1,250.    Elapsed: , Loss 0.6999193562005095
   Batch 1,000  of  1,250.    Elapsed: , Loss 0.6979253273624759
 Average training loss: 0.70
@@ -261,7 +260,6 @@ Average training loss: 0.62
 
 Training Accuracy: 0.70
 Validating Accuracy: 0.58
-Testing Accuracy: 0.57
 
 The result above la ket qua khi only fine tuning embedding and classifier
 ---------------
@@ -277,5 +275,249 @@ scheduler = get_linear_schedule_with_warmup(optimizer, 											num_warmup_ste
 Average training loss: 0.53
 Training Accuracy: 0.88
 Valid Accuracy: Accuracy: 0.82
-Test Accuracy: 0.83
 
+batch_size 8, optimizer = AdamW(model.parameters(), lr=5e-5, eps=1e-6, betas=(0.9,0.98), weight_decay =0.01)
+epochs 2, scheduler = get_linear_schedule_with_warmup(optimizer, 
+											num_warmup_steps=int(0.06*total_steps),
+											num_training_steps=total_steps)
+Fine tuning entire model parameters
+======== Epoch 1 / 2 ========
+  Batch 200  of  1,250.    Elapsed: , Loss 0.6794830278970709
+  Batch 400  of  1,250.    Elapsed: , Loss 0.6444760851766403
+  Batch 600  of  1,250.    Elapsed: , Loss 0.6127527945995728
+  Batch 800  of  1,250.    Elapsed: , Loss 0.5927456688977657
+  Batch 1,000  of  1,250.    Elapsed: , Loss 0.5802010090707185
+  Batch 1,200  of  1,250.    Elapsed: , Loss 0.568572939589905
+Average training loss: 0.57
+======== Epoch 2 / 2 ========
+  Batch 200  of  1,250.    Elapsed: , Loss 0.40790664258213777
+  Batch 400  of  1,250.    Elapsed: , Loss 0.4046985257203294
+  Batch 600  of  1,250.    Elapsed: , Loss 0.3956586726245388
+  Batch 800  of  1,250.    Elapsed: , Loss 0.39912180267692954
+  Batch 1,000  of  1,250.    Elapsed: , Loss 0.39573572378988925
+  Batch 1,200  of  1,250.    Elapsed: , Loss 0.3931263323848467
+Average training loss: 0.39
+Training Accuracy: 0.92
+Validating Accuracy: 0.83
+
+freeze_topk(model, 10) freeze first 10 last mini layer of model 
+batch_size 8, optimizer = AdamW(model.parameters(), lr=5e-5, eps=1e-6, betas=(0.9,0.98), weight_decay =0.01)
+epochs 2, scheduler = get_linear_schedule_with_warmup(optimizer, 
+											num_warmup_steps=int(0.06*total_steps),
+											num_training_steps=total_steps)
+( Models was trained and using the hyperparameter like above, because after fine-tuning with many different hyperparameter we saw that with 
+set of hyperparameter like above give the model with greatest result so far and it was used in Prompt-FT in NeurIPS 2023 )
+Training Accuracy: 0.96
+Validating Accuracy: 0.88
+Testing Accuracy: 0.85
+
+
+Now we experiment with set of new hyperparameter, which was mentioned in ICLR paper in 2021, this paper said that, doi voi bo du lieu nho
+ta van co the dat duoc ket qua on dinh, bang cach huan luyen model voi bo du lieu nho do' nhung voi' number of iteration the same as the 
+number of iteration, which was used to train model with large dataset
+
+Chung' toi cung~ thu nghiem. fine tuning khi ma` freeze_topk layer in Language Model, as mentioned in ICLR paper in 2021, they prove
+that when freeze top k with k >= 10, model dat. duoc ket qua fine-tuning on? dinh. hon, giam di van de catastrophic forgeting, va dong thoi
+ket qua sau khi fine tune cung tot hon 
+
+5 epochs, batch_size 8, 
+scheduler = get_linear_schedule_with_warmup(optimizer, 
+											num_warmup_steps=int(0.06*total_steps),
+											num_training_steps=total_steps) 
+Freeze last 5 layers in BERT base model 
+optimizer = AdamW(model.parameters(), lr=5e-5, eps=1e-6, betas=(0.9,0.98), weight_decay =0.01)
+======== Epoch 1 / 5 ========
+  Batch 200  of  1,250.    Elapsed: , Loss 0.6724465292188065
+  Batch 400  of  1,250.    Elapsed: , Loss 0.6132713031776231
+  Batch 600  of  1,250.    Elapsed: , Loss 0.5910295805399509
+  Batch 800  of  1,250.    Elapsed: , Loss 0.5870405770977785
+  Batch 1,000  of  1,250.    Elapsed: , Loss 0.5763602493317811
+  Batch 1,200  of  1,250.    Elapsed: , Loss 0.5686889881769088
+Average training loss: 0.57
+======== Epoch 2 / 5 ========
+  Batch 200  of  1,250.    Elapsed: , Loss 0.4239250645782817
+  Batch 400  of  1,250.    Elapsed: , Loss 0.4292393242499032
+  Batch 600  of  1,250.    Elapsed: , Loss 0.41617783266561303
+  Batch 800  of  1,250.    Elapsed: , Loss 0.4237905236079675
+  Batch 1,000  of  1,250.    Elapsed: , Loss 0.42418264961251606
+  Batch 1,200  of  1,250.    Elapsed: , Loss 0.4209636724883571
+Average training loss: 0.42
+======== Epoch 3 / 5 ========
+  Batch 200  of  1,250.    Elapsed: , Loss 0.30555825335070935
+  Batch 400  of  1,250.    Elapsed: , Loss 0.30455695179075076
+  Batch 600  of  1,250.    Elapsed: , Loss 0.3119266515221143
+  Batch 800  of  1,250.    Elapsed: , Loss 0.30291288450724224
+  Batch 1,000  of  1,250.    Elapsed: , Loss 0.3102693808012429
+  Batch 1,200  of  1,250.    Elapsed: , Loss 0.30949833801386106
+Average training loss: 0.31
+======== Epoch 4 / 5 ========
+  Batch 200  of  1,250.    Elapsed: , Loss 0.2119071599077526
+  Batch 400  of  1,250.    Elapsed: , Loss 0.1917147939261792
+  Batch 600  of  1,250.    Elapsed: , Loss 0.19988360325573398
+  Batch 800  of  1,250.    Elapsed: , Loss 0.18226432208464213
+  Batch 1,000  of  1,250.    Elapsed: , Loss 0.1826667600256911
+  Batch 1,200  of  1,250.    Elapsed: , Loss 0.180455049429109
+Average training loss: 0.18
+======== Epoch 5 / 5 ========
+  Batch 200  of  1,250.    Elapsed: , Loss 0.11838233818483089
+  Batch 400  of  1,250.    Elapsed: , Loss 0.10289835108431321
+  Batch 600  of  1,250.    Elapsed: , Loss 0.09556299728552924
+  Batch 800  of  1,250.    Elapsed: , Loss 0.09774925658356087
+  Batch 1,000  of  1,250.    Elapsed: , Loss 0.09269212046393903
+  Batch 1,200  of  1,250.    Elapsed: , Loss 0.09441808788016667
+Average training loss: 0.09
+Training Accuracy: 0.99
+Validating Accuracy: 0.84
+Testing Accuracy: 0.83
+all of the result above with seed 264
+
+The following result apply seed = 25, as in the paper ICLR 2021
+optimizer = AdamW(model.parameters(), lr=5e-5, eps=1e-6, betas=(0.9,0.999), weight_decay =0.01)
+epochs = 3, batch_size 16, freeze 5 last layers
+scheduler = get_linear_schedule_with_warmup(optimizer, 
+											num_warmup_steps=int(0.1*total_steps),
+											num_training_steps=total_steps)
+BERT base
+======== Epoch 1 / 3 ========
+  Batch 200  of  1,250.    Elapsed: , Loss 0.6891272248913399
+  Batch 400  of  1,250.    Elapsed: , Loss 0.639042005370234
+  Batch 600  of  1,250.    Elapsed: , Loss 0.6149237002563754
+  Batch 800  of  1,250.    Elapsed: , Loss 0.593522640547428
+  Batch 1,000  of  1,250.    Elapsed: , Loss 0.5794182022611102
+  Batch 1,200  of  1,250.    Elapsed: , Loss 0.5680136028599679
+Average training loss: 0.57
+======== Epoch 2 / 3 ========
+  Batch 200  of  1,250.    Elapsed: , Loss 0.4303445188115485
+  Batch 400  of  1,250.    Elapsed: , Loss 0.4150737450362887
+  Batch 600  of  1,250.    Elapsed: , Loss 0.4139629527709498
+  Batch 800  of  1,250.    Elapsed: , Loss 0.4091788682454125
+  Batch 1,000  of  1,250.    Elapsed: , Loss 0.411313905956579
+  Batch 1,200  of  1,250.    Elapsed: , Loss 0.4087503541254754
+Average training loss: 0.41
+======== Epoch 3 / 3 ========
+  Batch 200  of  1,250.    Elapsed: , Loss 0.2593891819480306
+  Batch 400  of  1,250.    Elapsed: , Loss 0.25713359350001813
+  Batch 600  of  1,250.    Elapsed: , Loss 0.26869966063963036
+  Batch 800  of  1,250.    Elapsed: , Loss 0.26925380857220704
+  Batch 1,000  of  1,250.    Elapsed: , Loss 0.2688039754618324
+  Batch 1,200  of  1,250.    Elapsed: , Loss 0.2672313464001724
+Average training loss: 0.27
+Training Accuracy: 0.97 
+Validating Accuracy: 0.82
+
+We decided to not show results for BERTBASE since previous works observed no instability when 
+fine-tuning BERTBASE which we also confirmed in our experiments. cite ICLR 2021 ( instability fine-tuning)
+
+
+The following result apply seed = 25, as in the paper ICLR 2021
+optimizer = AdamW(model.parameters(), lr=5e-5, eps=1e-6, betas=(0.9,0.999), weight_decay =0.01)
+epochs = 3, batch_size 16, freeze 12 last layers, seed = 25
+scheduler = get_linear_schedule_with_warmup(optimizer, 
+											num_warmup_steps=int(0.1*total_steps),
+											num_training_steps=total_steps)
+BERT large
+======== Epoch 1 / 3 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.694170554330693
+  Batch 400  of  625.    Elapsed: , Loss 0.7038691764014617
+  Batch 600  of  625.    Elapsed: , Loss 0.7060927048994975
+Average training loss: 0.71
+======== Epoch 2 / 3 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.7054342755037754
+  Batch 400  of  625.    Elapsed: , Loss 0.7058024199823489
+  Batch 600  of  625.    Elapsed: , Loss 0.7066764218636639
+Average training loss: 0.71
+======== Epoch 3 / 3 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.7072248233491508
+  Batch 400  of  625.    Elapsed: , Loss 0.7052844831176529
+  Batch 600  of  625.    Elapsed: , Loss 0.7053600155970022
+Average training loss: 0.71
+Training Accuracy: 0.5
+Validating Accuracy : 0.5
+
+The following result apply seed = 25, as in the paper ICLR 2021
+optimizer = Adam(model.parameters(), lr=5e-5, eps=1e-6, betas=(0.9,0.999), weight_decay =0.01)
+epochs = 3, batch_size 16, freeze 12 last layers, seed = 25
+scheduler = get_linear_schedule_with_warmup(optimizer, 
+											num_warmup_steps=int(0.1*total_steps),
+											num_training_steps=total_steps)
+
+======== Epoch 1 / 3 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.6777979249681406
+  Batch 400  of  625.    Elapsed: , Loss 0.6087130194070036
+  Batch 600  of  625.    Elapsed: , Loss 0.5907140027564298
+Average training loss: 0.59
+======== Epoch 2 / 3 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.6115856788199933
+  Batch 400  of  625.    Elapsed: , Loss 0.6432689798071497
+  Batch 600  of  625.    Elapsed: , Loss 0.6616876135005332
+Average training loss: 0.66
+======== Epoch 3 / 3 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.6960350500410469
+  Batch 400  of  625.    Elapsed: , Loss 0.6973033794143848
+  Batch 600  of  625.    Elapsed: , Loss 0.6966849766832818
+Average training loss: 0.70
+Training Accuracy: 0.5
+Validating Accuracy: 0.5
+
+
+optimizer = AdamW(model.parameters(), lr=1e-5, eps=1e-6, betas=(0.9,0.999), weight_decay =0.01)
+epochs = 10
+scheduler = get_linear_schedule_with_warmup(optimizer, 
+											num_warmup_steps=int(0.1*total_steps),
+											num_training_steps=total_steps)
+Freeze top 12 layers
+Training time around 2h or more on GPU P100
+======== Epoch 1 / 10 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.7026402045838276
+  Batch 400  of  625.    Elapsed: , Loss 0.6598273491175692
+  Batch 600  of  625.    Elapsed: , Loss 0.5986422675471139
+Average training loss: 0.59
+======== Epoch 2 / 10 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.327097032089435
+  Batch 400  of  625.    Elapsed: , Loss 0.3325200519917017
+  Batch 600  of  625.    Elapsed: , Loss 0.3374570842689762
+Average training loss: 0.34
+======== Epoch 3 / 10 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.1969907523332099
+  Batch 400  of  625.    Elapsed: , Loss 0.188030562874515
+  Batch 600  of  625.    Elapsed: , Loss 0.186834754520708
+Average training loss: 0.19
+======== Epoch 4 / 10 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.1085443762802885
+  Batch 400  of  625.    Elapsed: , Loss 0.10963612702324466
+  Batch 600  of  625.    Elapsed: , Loss 0.11408690571127933
+Average training loss: 0.11
+======== Epoch 5 / 10 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.05675562507581818
+  Batch 400  of  625.    Elapsed: , Loss 0.07381995066656659
+  Batch 600  of  625.    Elapsed: , Loss 0.07231505961988753
+Average training loss: 0.07
+======== Epoch 6 / 10 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.05895944916879508
+  Batch 400  of  625.    Elapsed: , Loss 0.05349607036743392
+  Batch 600  of  625.    Elapsed: , Loss 0.060476846549680885
+Average training loss: 0.06
+======== Epoch 7 / 10 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.023446232335588697
+  Batch 400  of  625.    Elapsed: , Loss 0.033823041967638856
+  Batch 600  of  625.    Elapsed: , Loss 0.033462490958652495
+Average training loss: 0.03
+======== Epoch 8 / 10 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.02227061516233918
+  Batch 400  of  625.    Elapsed: , Loss 0.025118846714814794
+  Batch 600  of  625.    Elapsed: , Loss 0.027865833587107324
+Average training loss: 0.03
+======== Epoch 9 / 10 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.020543820426583034
+  Batch 400  of  625.    Elapsed: , Loss 0.01593052550976933
+  Batch 600  of  625.    Elapsed: , Loss 0.0178852494519226
+Average training loss: 0.02
+======== Epoch 10 / 10 ========
+  Batch 200  of  625.    Elapsed: , Loss 0.01462841626549625
+  Batch 400  of  625.    Elapsed: , Loss 0.015006505622458963
+  Batch 600  of  625.    Elapsed: , Loss 0.014017099442552264
+Average training loss: 0.02
+
+Training Accuracy: 1.00 ( actually 0.9992)
+Validating Accuracy: 0.88 ( 0.884765625 )
+Testing Accuracy: 0.89 ( 0.892578125 )
