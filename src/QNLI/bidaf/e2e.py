@@ -13,14 +13,14 @@ class E2E(nn.Module):
         4. Then we concat [context, q2c, context*q2c, ] 
 
         '''
-        self.Ws = nn.Linear(hidden_size*6, 1, bias=False)
+        self.Ws = nn.Linear(hidden_size*6, 1, )
         torch.nn.init.normal_(self.Ws.weight, mean=0, std=0.02)
 
-        self.rnn = nn.RNN(input_size=hidden_size*8, hidden_size=hidden_size*4, num_layers=2, bidirectional=True, batch_first=True, dropout=0.2)
+        self.rnn = nn.LSTM(input_size=hidden_size*8, hidden_size=hidden_size*4, num_layers=2, bidirectional=True, batch_first=True, dropout=0.1)
         self.dropout = nn.Dropout(0.1)
 
-        self.last1 = nn.Linear(hidden_size*8, 1, bias=False)
-        self.last2 = nn.Linear(c_len, 2, bias=False)
+        self.last1 = nn.Linear(hidden_size*8*c_len, hidden_size*4  )
+        self.last2 = nn.Linear(hidden_size*4, 2)
         
         torch.nn.init.normal_(self.last1.weight, mean=0, std=0.02)
         torch.nn.init.normal_(self.last2.weight, mean=0, std=0.02)
@@ -57,9 +57,10 @@ class E2E(nn.Module):
         M, _ = self.rnn(G) # [bs, clen, hidden_size*8]
         M = self.dropout(M) 
         M = M + G # residual connection
-        out1 = self.last1(M) # [bs, clen, 1]
-        out1 = out1.squeeze(-1) # [bs, clen]
+        M = M.view(bs, -1)
+        out1 = self.last1(M) # [bs, hidden_size*4]
+
         out1 = self.dropout(out1)
-        out2 = self.last2(out1)
+        out2 = self.last2(out1) # [bs, 2]
         return out2
 

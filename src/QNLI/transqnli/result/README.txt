@@ -130,3 +130,67 @@ Validation Loss: 1.1601464189589024
 Accuracy: 16.084
 
 
+optimizer = torch.optim.Adam(model.parameters(), lr=5e-5,betas=(0.8, 0.999), eps=1e-06, weight_decay=0.0001)
+NAQNLI(
+  (w2v): WordEmbedding(
+    (word2vec): Word2Vec(
+      (embeddings): Embedding(30522, 768, padding_idx=0)
+    )
+    (positional_embedding): PositionalEmbedding()
+  )
+  (enc): TransformerEnc(
+    (qencoder): ModuleList(
+      (0-1): 2 x EncoderLayer(
+        (selfattn): SelfAttention(
+          (dropout): Dropout(p=0.1, inplace=False)
+          (p_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (p_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (ffn): FFN(
+          (linear1): Linear(in_features=768, out_features=3072, bias=True)
+          (linear2): Linear(in_features=3072, out_features=768, bias=True)
+          (gelu): GELU(approximate='none')
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (dropout): Dropout(p=0.1, inplace=False)
+        (norm): LayerNorm()
+      )
+    )
+    (cencoder): ModuleList(
+      (0-1): 2 x EncoderLayer(
+        (selfattn): SelfAttention(
+          (dropout): Dropout(p=0.1, inplace=False)
+          (p_qkv): Linear(in_features=768, out_features=2304, bias=True)
+          (p_proj): Linear(in_features=768, out_features=768, bias=True)
+        )
+        (ffn): FFN(
+          (linear1): Linear(in_features=768, out_features=3072, bias=True)
+          (linear2): Linear(in_features=3072, out_features=768, bias=True)
+          (gelu): GELU(approximate='none')
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+        (dropout): Dropout(p=0.1, inplace=False)
+        (norm): LayerNorm()
+      )
+    )
+    (Wsim): Linear(in_features=2304, out_features=1, bias=True)
+    (Wdistil): Linear(in_features=3072, out_features=768, bias=True)
+    (Whead1): Linear(in_features=393216, out_features=768, bias=True)
+    (Whead2): Linear(in_features=768, out_features=2, bias=True)
+    (dropout): Dropout(p=0.1, inplace=False)
+  )
+  (dropout): Dropout(p=0.1, inplace=False)
+)
+Epoch 0 Loss: 0.06527529907226562
+Epoch 1 Loss: 0.052844342041015624
+Epoch 2 Loss: 0.06037052612304687
+Epoch 3 Loss: 0.037116226196289064
+Epoch 4 Loss: 0.009616797637939453
+Epoch 5 Loss: 0.05264581298828125
+Epoch 6 Loss: 0.020165443420410156
+Epoch 7 Loss: 0.04416451110839844
+Epoch 8 Loss: 0.043794418334960936
+Epoch 9 Loss: 0.028610772705078124
+Training time: 3708.697199821472
+Validating Accuracy: 0.521
+Testing Accuracy: 0.523

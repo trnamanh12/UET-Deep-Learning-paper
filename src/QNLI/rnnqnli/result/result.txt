@@ -1,0 +1,377 @@
+args = {
+	'vocab_size': tokenizer.vocab_size,
+	'embed_size': 128,
+	'hidden_size': 256,
+	'num_layers': 4,
+	'c_len' : max_length,
+	'BERT': False
+}
+bs 64, seqlen 128
+optimizer = torch.optim.Adam(model.parameters(), lr=0.008,betas=(0.8, 0.999), eps=1e-07, weight_decay=0.0001)
+Epoch 0, Loss: 108.83555656671524
+Epoch 1, Loss: 54.41763052344322
+Epoch 2, Loss: 36.27841607729594
+Epoch 3, Loss: 27.208819955587387
+Epoch 4, Loss: 21.76706349849701
+Epoch 5, Loss: 18.13922554254532
+Epoch 6, Loss: 15.547911473682948
+Epoch 7, Loss: 13.604425713419914
+Epoch 8, Loss: 12.092824969026777
+Epoch 9, Loss: 10.883544021844864
+Epoch 10, Loss: 9.894132234833457
+Epoch 11, Loss: 9.069622327884039
+Epoch 12, Loss: 8.371959617504707
+Epoch 13, Loss: 7.773963021380561
+Epoch 14, Loss: 7.255699360370636
+Epoch 15, Loss: 6.802218407392502
+Epoch 16, Loss: 6.402088231900159
+Epoch 17, Loss: 6.046416799227397
+Epoch 18, Loss: 5.72818462472213
+Epoch 19, Loss: 5.441775533556938
+Epoch 20, Loss: 5.182643402190435
+Epoch 21, Loss: 4.947068829428066
+Epoch 22, Loss: 4.731978963250699
+Epoch 23, Loss: 4.534813284873962
+Epoch 24, Loss: 4.353420860767365
+Epoch 25, Loss: 4.185981606061642
+Epoch 26, Loss: 4.030945265734637
+Epoch 27, Loss: 3.886982894369534
+Epoch 28, Loss: 3.7529490466775566
+Epoch 29, Loss: 3.62785085439682
+Epoch 30, Loss: 3.510823390176219
+Epoch 31, Loss: 3.4011101350188255
+Epoch 32, Loss: 3.298046215014024
+Epoch 33, Loss: 3.2010449013289284
+Epoch 34, Loss: 3.1095864534378053
+Epoch 35, Loss: 3.023209050297737
+Epoch 36, Loss: 2.9415006557026424
+Epoch 37, Loss: 2.8640927860611365
+Epoch 38, Loss: 2.790654501853845
+Epoch 39, Loss: 2.7208881705999373
+Epoch 40, Loss: 2.654525059025462
+Epoch 41, Loss: 2.5913220459506627
+Epoch 42, Loss: 2.5310587619626244
+Epoch 43, Loss: 2.473534727638418
+Epoch 44, Loss: 2.418567266729143
+Epoch 45, Loss: 2.3659897265226943
+Epoch 46, Loss: 2.315649520843587
+Epoch 47, Loss: 2.2674068274597325
+Epoch 48, Loss: 2.221133219952486
+Epoch 49, Loss: 2.1767105412483216
+Epoch 50, Loss: 2.1340299447377524
+Epoch 51, Loss: 2.0929909210938673
+Epoch 52, Loss: 2.053500534228559
+Epoch 53, Loss: 2.0154727410387108
+Epoch 54, Loss: 1.9788277745246887
+Epoch 55, Loss: 1.9434915600078446
+Epoch 56, Loss: 1.9093952168498123
+Epoch 57, Loss: 1.8764746178840768
+Epoch 58, Loss: 1.8446699562719313
+Epoch 59, Loss: 1.8139254490534464
+Epoch 60, Loss: 1.7841889672592037
+Epoch 61, Loss: 1.7554117239290667
+Epoch 62, Loss: 1.7275480476636735
+Epoch 63, Loss: 1.7005551094189286
+Training time: 905.7937517166138
+Training Accuracy: 0.5013
+
+Validation Loss: 0.6931901108473539
+Accuracy: 0.492
+
+3000:3064
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        
+[0,
+ 1,
+ 1,
+ 0,
+ 0,
+ 1,
+ 1,
+ 1,
+ 0,
+ 1,
+ 1,
+ 1,
+ 1,
+ 0,
+ 1,
+ 1,
+ 0,
+ 0,
+ 1,
+ 1,
+ 0,
+ 0,
+ 1,
+ 1,
+ 1,
+ 0,
+ 1,
+ 1,
+ 0,
+ 1,
+ 0,
+ 0,
+ 1,
+ 0,
+ 1,
+ 1,
+ 1,
+ 1,
+ 1,
+ 0,
+ 1,
+ 1,
+ 1,
+ 1,
+ 0,
+ 1,
+ 1,
+ 0,
+ 1,
+ 0,
+ 0,
+ 0,
+ 0,
+ 1,
+ 1,
+ 0,
+ 1,
+ 0,
+ 1,
+ 1,
+ 1,
+ 1,
+ 1,
+ 1]
+
+optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5,betas=(0.8, 0.999), eps=1e-06, weight_decay=0.00001)
+epochs 64, batch_size 32, with BERT embedding
+RNNqnli(
+  (w2v): Word2Vec(
+    (embeddings): Embedding(28996, 768, padding_idx=0)
+  )
+  (rnn): RNNe(
+    (encq): RNN(768, 256, num_layers=2, batch_first=True, dropout=0.2, bidirectional=True)
+    (encc): RNN(768, 256, num_layers=2, batch_first=True, dropout=0.2, bidirectional=True)
+    (Wmodel): Linear(in_features=512, out_features=1, bias=True)
+    (Wout): Linear(in_features=128, out_features=2, bias=True)
+    (dropout): Dropout(p=0.1, inplace=False)
+  )
+)
+Epoch 0, Loss: 216.9960733652115
+Epoch 1, Loss: 108.4926587343216
+Epoch 2, Loss: 72.32697520653407
+Epoch 3, Loss: 54.2442869246006
+Epoch 4, Loss: 43.394785535335544
+Epoch 5, Loss: 36.161864161491394
+Epoch 6, Loss: 30.99555002791541
+Epoch 7, Loss: 27.120857812464237
+Epoch 8, Loss: 24.107241484853958
+Epoch 9, Loss: 21.69637332558632
+Epoch 10, Loss: 19.723864430730995
+Epoch 11, Loss: 18.080122232437134
+Epoch 12, Loss: 16.689275374779335
+Epoch 13, Loss: 15.49713038972446
+Epoch 14, Loss: 14.463945519924163
+Epoch 15, Loss: 13.559914831072092
+Epoch 16, Loss: 12.762245423653546
+Epoch 17, Loss: 12.053209844562742
+Epoch 18, Loss: 11.418812638834902
+Epoch 19, Loss: 10.847857651114463
+Epoch 20, Loss: 10.331281321389335
+Epoch 21, Loss: 9.861667958172886
+Epoch 22, Loss: 9.432892161866892
+Epoch 23, Loss: 9.039848451813063
+Epoch 24, Loss: 8.678249578475953
+Epoch 25, Loss: 8.344466383640583
+Epoch 26, Loss: 8.035408412968671
+Epoch 27, Loss: 7.7484267971345355
+Epoch 28, Loss: 7.481237201855101
+Epoch 29, Loss: 7.23186067144076
+Epoch 30, Loss: 6.998573176322445
+Epoch 31, Loss: 6.7798664681613445
+Epoch 32, Loss: 6.5744149161107615
+Epoch 33, Loss: 6.381048696882584
+Epoch 34, Loss: 6.198732328414917
+Epoch 35, Loss: 6.026544686820772
+Epoch 36, Loss: 5.8636645062549695
+Epoch 37, Loss: 5.709357070295434
+Epoch 38, Loss: 5.562962973729158
+Epoch 39, Loss: 5.423888556659222
+Epoch 40, Loss: 5.291598588955112
+Epoch 41, Loss: 5.165607726290112
+Epoch 42, Loss: 5.045477067315301
+Epoch 43, Loss: 4.930806913159111
+Epoch 44, Loss: 4.821233257982466
+Epoch 45, Loss: 4.716423752515213
+Epoch 46, Loss: 4.6160743147768875
+Epoch 47, Loss: 4.519905886302392
+Epoch 48, Loss: 4.427662939441447
+Epoch 49, Loss: 4.339109565019608
+Epoch 50, Loss: 4.2540289105153555
+Epoch 51, Loss: 4.172220643896323
+Epoch 52, Loss: 4.09349942319798
+Epoch 53, Loss: 4.017693920267953
+Epoch 54, Loss: 3.9446448716250333
+Epoch 55, Loss: 3.8742047963397845
+Epoch 56, Loss: 3.806236303689187
+Epoch 57, Loss: 3.740611473034168
+Epoch 58, Loss: 3.677211264432487
+Epoch 59, Loss: 3.6159244070450467
+Epoch 60, Loss: 3.5566469675204795
+Epoch 61, Loss: 3.4992816150188446
+Epoch 62, Loss: 3.443737494567084
+Epoch 63, Loss: 3.389929024502635
+Training time: 621.7510857582092
+
+After the worse result above, we decide to change parameters in FCN layer, or output layer
+Training Accuracy: 0.5013
+Validating Accuracy: 0.492
+
+RNNqnli(
+  (w2v): Word2Vec(
+    (embeddings): Embedding(28996, 768, padding_idx=0)
+  )
+  (rnn): RNNe(
+    (encq): RNN(768, 256, num_layers=4, batch_first=True, dropout=0.2, bidirectional=True)
+    (encc): RNN(768, 256, num_layers=4, batch_first=True, dropout=0.2, bidirectional=True)
+    (Wmodel): Linear(in_features=65536, out_features=512, bias=True)
+    (Wout): Linear(in_features=512, out_features=2, bias=True)
+    (dropout): Dropout(p=0.1, inplace=False)
+  )
+)
+optimizer = torch.optim.AdamW(model.parameters(), lr=0.008,betas=(0.8, 0.999), eps=1e-06, weight_decay=0.00001)
+when training with lr= 0.008 we found that loss dao dong. qua manh. nen we decide to decrease learning rate.
+Epoch 0, Loss: 15299.16935044527
+Epoch 1, Loss: 4601.794028759003
+Epoch 2, Loss: 28762.70596788327
+Epoch 3, Loss: 57.05099445581436
+Epoch 4, Loss: 46.98484877347946
+Epoch 5, Loss: 24781.520931512117
+Epoch 6, Loss: 55.082051805087495
+Epoch 7, Loss: 27.62206168472767
+Epoch 8, Loss: 25.075230333540176
+Epoch 9, Loss: 22.386896777153016
+Epoch 10, Loss: 24.7271789745851
+Epoch 11, Loss: 597.2548572123051
+
+
+RNNqnli(
+  (w2v): Word2Vec(
+    (embeddings): Embedding(28996, 768, padding_idx=0)
+  )
+  (rnn): RNNe(
+    (encq): RNN(768, 256, num_layers=4, batch_first=True, dropout=0.2, bidirectional=True)
+    (encc): RNN(768, 256, num_layers=4, batch_first=True, dropout=0.2, bidirectional=True)
+    (Wmodel): Linear(in_features=65536, out_features=512, bias=True)
+    (Wout): Linear(in_features=512, out_features=2, bias=True)
+    (dropout): Dropout(p=0.1, inplace=False)
+  )
+)
+optimizer = torch.optim.AdamW(model.parameters(), lr=3e-5,betas=(0.8, 0.999), eps=1e-06, weight_decay=0.00001)
+epochs 40, batch_size 32
+Epoch 0, Loss: 234.78642970323563
+Epoch 1, Loss: 112.38369643688202
+Epoch 2, Loss: 73.28825545310974
+Epoch 3, Loss: 53.06288965791464
+Epoch 4, Loss: 40.63966828584671
+Epoch 5, Loss: 32.53373941779137
+Epoch 6, Loss: 26.315820204360143
+Epoch 7, Loss: 22.067035760730505
+Epoch 8, Loss: 18.507850845654804
+Epoch 9, Loss: 15.678650207817554
+Epoch 10, Loss: 13.43772523917935
+Epoch 11, Loss: 11.490100478132566
+Epoch 12, Loss: 9.965699025071585
+Epoch 13, Loss: 8.545491673052311
+Epoch 14, Loss: 7.369012353320916
+Epoch 15, Loss: 6.445888279005885
+Epoch 16, Loss: 5.569941667511182
+Epoch 17, Loss: 4.562769618092312
+Epoch 18, Loss: 4.023064006512103
+Epoch 19, Loss: 3.4145591450855135
+Epoch 20, Loss: 2.986466253974608
+Epoch 21, Loss: 2.454061273316091
+Epoch 22, Loss: 2.1281364745581928
+Epoch 23, Loss: 1.875066855029824
+Epoch 24, Loss: 1.6198966303840279
+Epoch 25, Loss: 1.5480990387642612
+Epoch 26, Loss: 1.3275738104841568
+Epoch 27, Loss: 1.21178197181767
+Epoch 28, Loss: 1.1453479643959295
+Epoch 29, Loss: 0.920074470139419
+Epoch 30, Loss: 0.7965708990138204
+Epoch 31, Loss: 0.753970399076934
+Epoch 32, Loss: 0.628771046950891
+Epoch 33, Loss: 0.5858013210576353
+Epoch 34, Loss: 0.4713822077128238
+Epoch 35, Loss: 0.4233220215487058
+Epoch 36, Loss: 0.46576798445297557
+Epoch 37, Loss: 0.42961388712482357
+Epoch 38, Loss: 0.35628457255034635
+Epoch 39, Loss: 0.32715928828765756
+Training time: 697.13419127464
+Training Accuracy: 0.9791
+Validating Accuracy: 0.551
+Testing Accuracy: 0.527
+
+RNNqnli(
+  (w2v): Word2Vec(
+    (embeddings): Embedding(28996, 768, padding_idx=0)
+  )
+  (rnn): RNNe(
+    (encq): RNN(768, 256, num_layers=8, batch_first=True, dropout=0.1, bidirectional=True)
+    (encc): RNN(768, 256, num_layers=8, batch_first=True, dropout=0.1, bidirectional=True)
+    (Wmodel): Linear(in_features=65536, out_features=512, bias=True)
+    (Wout): Linear(in_features=512, out_features=2, bias=True)
+    (dropout): Dropout(p=0.1, inplace=False)
+  )
+)
+optimizer = torch.optim.AdamW(model.parameters(), lr=3e-5,betas=(0.8, 0.999), eps=1e-06, weight_decay=0.00001)
+Epoch 0, Loss: 245.1787145137787
+Epoch 1, Loss: 115.54210764169693
+Epoch 2, Loss: 74.01656134923299
+Epoch 3, Loss: 53.71873768419027
+Epoch 4, Loss: 40.927859771251676
+Epoch 5, Loss: 32.18340257803599
+Epoch 6, Loss: 26.17334885256631
+Epoch 7, Loss: 21.679332934319973
+Epoch 8, Loss: 17.905433398154045
+Epoch 9, Loss: 15.205241604149341
+Epoch 10, Loss: 12.796556719324805
+Epoch 11, Loss: 10.765731889754534
+Epoch 12, Loss: 9.278897231587997
+Epoch 13, Loss: 7.605347026671682
+Epoch 14, Loss: 6.728598338365555
+Epoch 15, Loss: 5.815897597000003
+Epoch 16, Loss: 4.89454097169287
+Epoch 17, Loss: 4.236888674398263
+Epoch 18, Loss: 3.602931549478518
+Epoch 19, Loss: 3.204580819234252
+Epoch 20, Loss: 2.6676589181380614
+Epoch 21, Loss: 2.29616982113062
+Epoch 22, Loss: 2.0034999463950163
+Epoch 23, Loss: 1.6700880750237654
+Epoch 24, Loss: 1.6865688040480018
+Epoch 25, Loss: 1.4416714049875736
+Epoch 26, Loss: 1.2237936561685745
+Epoch 27, Loss: 1.1138397518121306
+Epoch 28, Loss: 1.0176368734381835
+Epoch 29, Loss: 0.9199094969624032
+Epoch 30, Loss: 0.8325200132657623
+Epoch 31, Loss: 0.7301755781008978
+Epoch 32, Loss: 0.7129266687570084
+Epoch 33, Loss: 0.6833853154710274
+Epoch 34, Loss: 0.6685729747638106
+Epoch 35, Loss: 0.6232552354793168
+Epoch 36, Loss: 0.5474882960174786
+Epoch 37, Loss: 0.48261977103309045
+Epoch 38, Loss: 0.5037706208785471
+Epoch 39, Loss: 0.3951730502893042
+Training time: 1140.4036102294922
+Training Accuracy: 0.9709
+Validating Accuracy: 0.526
