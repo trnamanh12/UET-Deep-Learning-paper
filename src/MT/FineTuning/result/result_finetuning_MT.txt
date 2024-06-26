@@ -15,7 +15,6 @@ Average training loss: 0.41
 Train BLEU score: 79.49787844610934
 
 Valid BLEU score: 61.320531682080535
-Test BLEU score: 59.91576993096669									
 														
 
 optimizer = optim.AdamW(model.parameters(), lr=3e-4, weight_decay =0.00001), batch_size 8, epochs 1
@@ -52,4 +51,3 @@ Average training loss: 0.04
 
 Training BLEU score: 93.1147815848084393.11
 Validating BLEU score: 59.9681215440471
-Testing BLEU score: 57.19523520778124

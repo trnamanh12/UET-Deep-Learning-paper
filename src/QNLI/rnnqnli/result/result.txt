@@ -374,4 +374,3 @@ Epoch 38, Loss: 0.5037706208785471
 Epoch 39, Loss: 0.3951730502893042
 Training time: 1140.4036102294922
 Training Accuracy: 0.9709
-Validating Accuracy: 0.526
