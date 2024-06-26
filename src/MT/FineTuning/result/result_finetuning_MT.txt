@@ -51,3 +51,38 @@ Average training loss: 0.04
 
 Training BLEU score: 93.1147815848084393.11
 Validating BLEU score: 59.9681215440471
+
+Translate of best model
+['Translate the following English sentence into Vietnamese: It was also an expensive fight .',
+ 'Translate the following English sentence into Vietnamese: It was the kind of fight and the kind of choices that everyone here agrees pump up the cost of end-of-life care , and of healthcare for all of us .',
+ 'Translate the following English sentence into Vietnamese: And for me , for us , we pushed the fight right over the edge , and I never got the chance to say to him what I say to him now almost every day : &quot; Hey , buddy , it was a hell of a ride . &quot;',
+ 'Translate the following English sentence into Vietnamese: We never got the chance to say goodbye .',
+ 'Translate the following English sentence into Vietnamese: We never thought it was the end .',
+ 'Translate the following English sentence into Vietnamese: We always had hope .',
+ 'Translate the following English sentence into Vietnamese: So what do we make of all of this ?',
+ 'Translate the following English sentence into Vietnamese: Being a journalist , after Terence died , I wrote a book , &quot; The Cost Of Hope . &quot;',
+ 'Translate the following English sentence into Vietnamese: I wrote it because I wanted to know why I did what I did , why he did what he did , why everyone around us did what they did .',
+ 'Translate the following English sentence into Vietnamese: And what did I discover ?',
+ 'Translate the following English sentence into Vietnamese: Well , one of the things I discovered is that experts think that one answer to what I did at the end was a piece of paper , the advance directive , to help families get past the seemingly irrational choices .',
+ 'Translate the following English sentence into Vietnamese: Yet I had that piece of paper .',
+ 'Translate the following English sentence into Vietnamese: We both did .',
+ 'Translate the following English sentence into Vietnamese: And they were readily available .',
+ 'Translate the following English sentence into Vietnamese: I had them right at hand .',
+ 'Translate the following English sentence into Vietnamese: Both of them said the same thing : Do nothing if there is no further hope .']
+
+ ['Nó cũng là một trận đánh đắt đỏ.',
+ 'Đó là kiểu đấu tranh và là kiểu lựa chọn mà tất cả mọi người ở đây đồng ý đẩy chi phí chăm sóc cuối đời và chi trả cho y tế lên cao.',
+ 'Và đối với tôi, đối với chúng tôi, chúng tôi, chúng tôi đã đẩy trận đấu đến bờ vực, và tôi không còn cơ hội để nói với anh ấy điều mà tôi vẫn hay nói với anh ấy mỗi ngày : &quot; Này, anh bạn, đó quả là một chuyến phiêu lưu trú. &quot;',
+ 'Chúng tôi không có cơ hội để từ biệt.',
+ 'Chúng tôi không bao giờ nghĩ đó là kết thúc.',
+ 'Chúng tôi luôn hy vọng.',
+ 'Vậy chúng ta làm được gì từ tất cả những thứ này?',
+ 'Là một nhà báo, sau khi Terence qua đời, tôi đã viết một cuốn sách, &quot; Cái giá của Hy vọng &quot;',
+ 'Tôi viết bởi vì tôi muốn biết tại sao mình đã làm như vậy, tại sao anh ấy lại làm như vậy, tại sao mọi người xung quanh chúng tôi lại làm như vậy.',
+ 'Và tôi đã phát hiện ra điều gì?',
+ 'Một trong những điều mà tôi phát hiện ra đó là các chuyên gia nghĩ rằng một câu trả lời cho những gì tôi làm cuối cùng chỉ là một mẩu giấy, một chỉ dẫn trước, để giúp các gia đình vượt qua những lựa chọn có vẻ là sai lầm.',
+ 'Nhưng tôi đã có tờ giấy đó.',
+ 'Cả hai chúng tôi đều có.',
+ 'Và chúng được bán rộng rãi.',
+ 'Tôi đã có chúng trong tay.',
+ 'Cả hai đều nói cùng một điều : Đừng làm gì nữa nếu không còn hy vọng.']
