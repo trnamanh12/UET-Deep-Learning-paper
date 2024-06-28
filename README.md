@@ -2,7 +2,7 @@
 
 # Project Title
 
-A brief description of what this project does and who it's for.
+A brief description of what this project does.
 
 ## Description
 
@@ -12,14 +12,21 @@ This project focuses on machine translation and question answering tasks, levera
 
 The MT component explores different neural network architectures for translating text from one language to another. It includes:
 
-- **RNN**: Implementation of Recurrent Neural Networks for machine translation.
-- **Transformer**: Utilization of the Transformer model for more efficient translation.
+- **RNN**: Recurrent Neural Network-based MT models and related scripts.
+- **Transformer**: Transformer-based MT models and related scripts.
+
 - **FineTuning**: Fine-tuning pre-trained models on specific machine translation tasks.
 
 Data for machine translation can be found [here](https://huggingface.co/NlpHUST/t5-en-vi-small).
 
 ### Question-Answering (QNLI)
 
-The QNLI component focuses on fine-tuning and evaluating models on the Question-Answering Natural Language Inference task.
+**QNLI**: This subdirectory is dedicated to the Question Natural Language Inference (QNLI) task.
+
+- **Finetuning**: Scripts and configurations for fine-tuning QNLI models.
+- **RNN-QNLI**: Recurrent Neural Network-based QNLI models and related scripts.
+- **S-BiDAF**: Scripts for the S-BiDAF model applied to QNLI tasks. ( Simplified-BiDAF)
+- **S-QAnet**: Scripts for the S-QAnet model applied to QNLI tasks. ( Simplified-QAnet)
 
 Data for the QNLI task can be found [here](https://huggingface.co/datasets/nyu-mll/glue).
+
