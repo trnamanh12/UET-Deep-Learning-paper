@@ -74,12 +74,16 @@ class CrossAttention(nn.Module):
 			self.nhead = nhead
 			self.W_q = nn.Linear(embed_size, embed_size)
 			torch.nn.init.xavier_uniform_(self.W_q.weight)
+
 			self.W_k = nn.Linear(embed_size, embed_size)
 			torch.nn.init.xavier_uniform_(self.W_k.weight)
+			
 			self.W_v = nn.Linear(embed_size, embed_size)
 			torch.nn.init.xavier_uniform_(self.W_v.weight)
+
 			self.W_o = nn.Linear(embed_size, embed_size)
 			torch.nn.init.xavier_uniform_(self.W_o.weight)
+
 			self.dropout = nn.Dropout(0.1)
 			
 	def forward(self, tgt, enc, mask):

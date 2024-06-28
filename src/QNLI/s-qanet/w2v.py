@@ -101,3 +101,4 @@ class WordEmbedding(nn.Module):
 		x = self.word2vec(x)
 		x = x + self.positional_embedding(x)
 		return x
+	

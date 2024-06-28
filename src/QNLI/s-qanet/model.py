@@ -95,10 +95,9 @@ class EncoderLayer(nn.Module):
 
     def forward(self, x, mask):
         # x  [bs, seqlen, embed_size]
-        _x = x
         x = x +  self.dropout(self.selfattn(x, mask))
         x = self.norm(x)
-        _x = x
+		
         x = x + self.dropout(self.ffn(x))
         x = self.norm(x)
         return x, mask
@@ -123,10 +122,10 @@ class TransformerEnc(nn.Module):
 
         self.synin4 = [EncoderLayer(embed_size*4, nhead, 0.1 ).to(device) for _ in range(num_layers)]
 
-        self.Whead1 = nn.Linear(embed_size*4, 1)
+        self.Whead1 = nn.Linear(c_len*embed_size*4, embed_size)
         torch.nn.init.xavier_uniform_(self.Whead1.weight)
 
-        self.Whead2 = nn.Linear(c_len, 2)
+        self.Whead2 = nn.Linear(embed_size, 2)
         torch.nn.init.xavier_uniform_(self.Whead2.weight)
 
         self.dropout = nn.Dropout(0.1)
@@ -172,9 +171,9 @@ class TransformerEnc(nn.Module):
         for layer in self.synin4:
             distil, c_mask = layer(distil, c_mask)
         # synin4 = self.synin4(distil) 
+        distil = distil.contiguous().view(bs, -1)
         out1 = self.Whead1(distil)
 
-        out1 = out1.squeeze(-1)
         out2 = self.Whead2(self.dropout(out1))
 
         return out2

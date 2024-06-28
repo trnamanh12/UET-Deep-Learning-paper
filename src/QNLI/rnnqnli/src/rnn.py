@@ -28,3 +28,4 @@ class RNNe(nn.Module):
 # 		out1 = out1.squeeze(-1) # [bs, c_len]
 		out2 = self.Wout(self.dropout(out1))
 		return out2
+

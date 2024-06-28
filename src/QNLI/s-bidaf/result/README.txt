@@ -168,3 +168,114 @@ Training time: 1715.642375946045
 
 validating Accuracy: 52.1
 Testing Accuracy: 51.1
+
+
+BiDAF(
+  (w2v): Word2Vec(
+    (embeddings): Embedding(30522, 768, padding_idx=0)
+  )
+  (qcontext): ContextualEmbedding(
+    (RNN): LSTM(768, 128, batch_first=True, dropout=0.1, bidirectional=True)
+  )
+  (ccontext): ContextualEmbedding(
+    (RNN): LSTM(768, 128, batch_first=True, dropout=0.1, bidirectional=True)
+  )
+  (e2e): E2E(
+    (Ws): Linear(in_features=768, out_features=1, bias=True)
+    (rnn): LSTM(1024, 256, batch_first=True, dropout=0.1, bidirectional=True)
+    (dropout): Dropout(p=0.1, inplace=False)
+    (last1): Linear(in_features=32768, out_features=128, bias=True)
+    (last2): Linear(in_features=128, out_features=2, bias=True)
+  )
+)
+optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5,betas=(0.8, 0.999), eps=1e-06, weight_decay=0.0001)
+scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=3275*6, eta_min=1e-6)
+bs 32
+Epoch: 0, Loss: 0.6901807617179927
+Epoch: 1, Loss: 0.6795087454518532
+Epoch: 2, Loss: 0.6725808177405038
+Epoch: 3, Loss: 0.6689575797694445
+Epoch: 4, Loss: 0.6666689369834335
+Epoch: 5, Loss: 0.6654005739917533
+Training time: 771.2470979690552
+
+Validating Accuracy: 60.8
+Testing Accuracy: 62.8
+
+
+BiDAF(
+  (w2v): Word2Vec(
+    (embeddings): Embedding(30522, 768, padding_idx=0)
+    (linear): Linear(in_features=768, out_features=100, bias=True)
+  )
+  (qcontext): ContextualEmbedding(
+    (RNN): LSTM(100, 100, batch_first=True, dropout=0.1, bidirectional=True)
+  )
+  (ccontext): ContextualEmbedding(
+    (RNN): LSTM(100, 100, batch_first=True, dropout=0.1, bidirectional=True)
+  )
+  (e2e): E2E(
+    (Ws): Linear(in_features=600, out_features=1, bias=True)
+    (rnn): LSTM(800, 200, batch_first=True, dropout=0.1, bidirectional=True)
+    (dropout): Dropout(p=0.1, inplace=False)
+    (last1): Linear(in_features=25600, out_features=200, bias=True)
+    (last2): Linear(in_features=200, out_features=2, bias=True)
+  )
+)
+bs 64
+Epoch: 0, Loss: 0.6933018986452041
+Epoch: 1, Loss: 0.6815627823898395
+Epoch: 2, Loss: 0.6704330832476141
+Epoch: 3, Loss: 0.6644803663908015
+Epoch: 4, Loss: 0.6615880144829421
+Epoch: 5, Loss: 0.6596776295086926
+Epoch: 6, Loss: 0.6579914702536059
+Epoch: 7, Loss: 0.6567048915800119
+Epoch: 8, Loss: 0.6554653336161437
+Epoch: 9, Loss: 0.6543673048969005
+Epoch: 10, Loss: 0.6533067246800016
+Epoch: 11, Loss: 0.6523471716415904
+Training time: 1113.2244563102722
+
+Validating Accuracy: 62.0
+Testing Accuracy: 62.4
+
+BiDAF(
+  (w2v): Word2Vec(
+    (embeddings): Embedding(30522, 768, padding_idx=0)
+    (linear): Linear(in_features=768, out_features=100, bias=True)
+  )
+  (qcontext): ContextualEmbedding(
+    (RNN): LSTM(100, 100, batch_first=True, dropout=0.1, bidirectional=True)
+  )
+  (ccontext): ContextualEmbedding(
+    (RNN): LSTM(100, 100, batch_first=True, dropout=0.1, bidirectional=True)
+  )
+  (e2e): E2E(
+    (Ws): Linear(in_features=600, out_features=1, bias=True)
+    (rnn): LSTM(800, 200, batch_first=True, dropout=0.1, bidirectional=True)
+    (dropout): Dropout(p=0.1, inplace=False)
+    (last1): Linear(in_features=25600, out_features=200, bias=True)
+    (last2): Linear(in_features=200, out_features=2, bias=True)
+  )
+)
+Epoch: 0, Loss: 0.6843056147497361
+Epoch: 1, Loss: 0.6766236687172318
+Epoch: 2, Loss: 0.6691687264285244
+Epoch: 3, Loss: 0.6646046979086739
+Epoch: 4, Loss: 0.6621523839359027
+Epoch: 5, Loss: 0.6602787403105524
+Epoch: 6, Loss: 0.6587146492231459
+Epoch: 7, Loss: 0.6574255544624049
+Epoch: 8, Loss: 0.6562611072782486
+Epoch: 9, Loss: 0.6552886107756832
+Epoch: 10, Loss: 0.6543874226792536
+Epoch: 11, Loss: 0.6535398669731922
+Epoch: 12, Loss: 0.6526308834771097
+Epoch: 13, Loss: 0.6517604015249036
+Epoch: 14, Loss: 0.650915849121499
+Epoch: 15, Loss: 0.6501729627377529
+Training time: 1287.8525929450989
+
+Validating Accuracy: 61.7
+Testing Accuracy: 62.7

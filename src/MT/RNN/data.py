@@ -3,8 +3,6 @@ import torch
 from torch.utils.data import Dataset, DataLoader, TensorDataset
 # from transformers import BertTokenizerFast
 
-
-
 class SentenceDataset(Dataset):
     def __init__(self, src_sentence, tgt_sentence, tokenizer, max_length):
         self.src = src_sentence 

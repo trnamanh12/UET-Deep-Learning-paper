@@ -78,7 +78,6 @@ class DecoderRNN(nn.Module):
 		decoder_output, decoder_hidden  = self.forward_step(decoder_input, decoder_hidden)
 		decoder_outputs.append(decoder_output)
 		
-
 		decoder_outputs = torch.cat(decoder_outputs, dim=1)
 		return decoder_outputs, generated_tokens
 

@@ -10,11 +10,16 @@ class Word2Vec(nn.Module):
 			model = BertModel.from_pretrained('bert-base-uncased')
 			self.embeddings = model.embeddings.word_embeddings
 			self.embeddings.requires_grad_(False)
+			self.linear = nn.Linear(768, embed_size)
+			torch.nn.init.normal_(self.linear.weight, mean=0, std=0.02)
 		else:	
 			self.embeddings = nn.Embedding(vocab_size, embed_size)
 			torch.nn.init.normal_(self.embeddings.weight, mean=0, std=0.02)
+			self.linear = nn.Linear(embed_size, embed_size)
+			torch.nn.init.normal_(self.linear.weight, mean=0, std=0.02)
 	def forward(self, x):
 		x = self.embeddings(x)
+		x = self.linear(x)
 		return x
 
 # class Highway(nn.Module):
@@ -32,12 +37,12 @@ class Word2Vec(nn.Module):
 class ContextualEmbedding(nn.Module):
 	def __init__(self, embed_size, hidden_size):
 		super(ContextualEmbedding, self).__init__()
-		self.RNN= nn.RNN(input_size=embed_size,
+		self.RNN= nn.LSTM(input_size=embed_size,
 							hidden_size=hidden_size,
-							num_layers=2,
+							num_layers=1,
 							bidirectional=True,
 							batch_first=True,
-							dropout=0.2)
+							dropout=0.1)
 	def forward(self, x):
 		output, _ = self.RNN(x)
 		return output

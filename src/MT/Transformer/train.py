@@ -48,32 +48,36 @@ valid_loader = DataLoader(valid_data, batch_size=32, shuffle=False)
 test_loader = DataLoader(test_data, batch_size=32, shuffle=False)
 
 args = {
-	'embed_size': 256,
-	'num_layers': 4,
+	'embed_size': 768,
+	'num_layers': 8,
 	'max_len' : 128,
-	'nhead': 4,
+	'nhead': 12,
 	'dropout': 0.1,
 	'vocab_size': tokenizer.vocab_size,
-	'BERT': False,
+	'BERT': True,
 	'device': device
 }
-
 class MultiLayerTransformerMT(nn.Module):
 	def __init__(self, args):
 		super(MultiLayerTransformerMT, self).__init__()
-		self.embeddings = WordEmbedding(args['vocab_size'], args['embed_size'],args['max_len'], args['device'], args['BERT'])
+		self.embeddings = WordEmbedding(args['vocab_size'], args['embed_size'], args['max_len'], args['device'], args['BERT'])
 		self.transformer = nn.ModuleList([TransformerMT(args) for _ in range(args['num_layers'])])
 		self.head = nn.Linear(args['embed_size'], args['vocab_size'])
+		torch.nn.init.xavier_uniform_(self.head.weight)
+
 	def forward(self, src, tgt, src_mask, tgt_mask):
 		src = self.embeddings(src)
 		tgt = self.embeddings(tgt)
 		for layer in self.transformer:
 			src, tgt, src_mask, tgt_mask = layer(src, tgt, src_mask, tgt_mask)
-		return self.head(tgt)
+		tgt = self.head(tgt)
+		return tgt.reshape(-1, tgt.size(-1))
+
+
 
 model = MultiLayerTransformerMT(args).to(device)
 model = torch.compile(model)
-optimizer = optim.AdamW(model.parameters(), lr=0.001, betas=(0.9, 0.98), eps=1e-9, weight_decay=0.01)
+optim = optim.AdamW(model.parameters(), lr=0.001, betas=(0.9, 0.98), eps=1e-9, weight_decay=0.01)
 
 critertion = nn.CrossEntropyLoss().to(device)
 
@@ -89,15 +93,16 @@ def train (model, data, optimizer, critertion, device, epochs=1):
 			src_mask = batch['src_mask'].to(device)
 			tgt_mask = batch['tgt_mask'].to(device)
 			optimizer.zero_grad()
-			with torch.autocast(device_type=device, dtype=torch.bfloat16):
+			with torch.autocast(device_type='cuda', dtype=torch.float16):
 				output = model(src, tgt[:, :-1], src_mask, tgt_mask[:, :-1])
 				# output = output.view(-1, output.size(-1))
-				loss = critertion(output.view(-1, output.size(-1)), tgt[:, 1:].contiguous().view(-1))
+				loss = critertion(output, tgt[:, 1:].contiguous().view(-1))
 			loss.backward()
+			torch.nn.utils.clip_grad_norm_(v_1, max_norm=1.0, norm_type=2)
 			optimizer.step()
 			torch.cuda.synchronize()
 			running_loss += (loss.item())
-			if (i+1) % 1000 == 0:
+			if (i+1) % 50 == 0:
 				print(f'Epoch: {j}, step: {i}, Loss: {loss.item()/i}')
 	end = time.time()
 	print(f'Time taken: {end-start}')

@@ -58,7 +58,7 @@ class Seq2Seq(nn.Module):
 							config['sos_token'], config['max_length'] ,config['BERT'], config['generator'] )
 		self.device = config['device']
 	
-	def forward(self, src, tgt=None):
+	def forward(self, src, tgt):
 		encoder_output, encoder_hidden = self.encoder(src)
 		decoder_output = self.decoder(encoder_output, encoder_hidden, self.device, tgt)
 		return decoder_output # [bs, seqlen, vocab_size]
@@ -66,16 +66,19 @@ class Seq2Seq(nn.Module):
 generator = torch.Generator(device=device)
 generator.manual_seed(42+222)
 
+BERT = False
+
 config = {
     'vocab_size': tokenizer.vocab_size,
-    'input_size': 128,
+    'input_size': 768 if BERT else 128 ,
     'hidden_size': 256,
-	'BERT': False,
+	'BERT': BERT,
 	'dropout': 0.1,
 	'sos_token': tokenizer.convert_tokens_to_ids('[CLS]'),
-	'max_length': 128-2,
+	'max_length': 64-2,
 	'device' : device,
-	'generator': generator
+    'generator': generator
+
 }
 
 model = Seq2Seq(config).to(device)
@@ -91,48 +94,53 @@ def train (model, data, optimizer, critertion, device, epochs=1):
 			src = batch['src'].to(device)
 			tgt = batch['tgt'].to(device)
 			optimizer.zero_grad()
-			with torch.autocast(device_type=device, dtype=torch.bfloat16):
-				output = model(src, tgt[:, 1:-1])
-				loss = critertion(output.view(-1, output.size(-1)), tgt[:, 1:].reshape(-1))
+			output, _ = model(src, tgt[:, 1:-1])
+			output = output.reshape(-1, output.size(-1))
+			loss = critertion(output, tgt[:, 1:].contiguous().view(-1))
 			loss.backward()
 			optimizer.step()
 			torch.cuda.synchronize()
 			running_loss += (loss.item())
-			if (i+1) % 1000 == 0:
+			if (i+1) % 10 == 0:
 				print(f'Epoch: {j}, step: {i}, Loss: {loss.item()/i}')
 	end = time.time()
 	print(f'Time: {end-start}, Loss: {running_loss/len(data)}')
-
-
 # train(model, train_loader, optimizer, critertion, device, batch_size=32, num_epochs=10)
 
-def evaluation(model, data, optimizer, critertion, device):
+train(model, train_loader, optimizer, critertion, 'cuda', epochs=10)
+
+
+
+
+import time
+from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
+
+def evaluation(model, data, criterion, device):
 	model.eval()
 	start = time.time()
+	bleu_score = 0
 	running_loss = 0
+	total_samples = 0  # Keep track of total samples for averaging BLEU
+
 	for i, batch in enumerate(data):
 		src = batch['src'].to(device)
 		tgt = batch['tgt'].to(device)
 		with torch.no_grad():
-			with torch.autocast(device_type=device, dtype=torch.bfloat16):
-				output = model(src, tgt[:, 1:-1])
-				output = output.view(-1, output.size(-1))
-				loss = critertion(output, tgt[:, 1:].contiguous().view(-1))
-		running_loss += (loss.item())
+			with torch.cuda.amp.autocast():  # Assuming you're using CUDA
+				output, _ = model(src, tgt[:, 1:-1])
+				output = output.reshape(-1, output.size(-1))
+				loss = criterion(output, tgt[:, 1:].contiguous().view(-1))
+			output = output.argmax(dim=-1)
+			output = output.view(src.size(0), -1)
+			# Calculate BLEU for each sentence and accumulate
+			for ref, pred in zip(tgt[:, 1:], output):
+				bleu_score += sentence_bleu([ref.cpu().numpy().tolist()], pred.cpu().numpy().tolist(), smoothing_function=SmoothingFunction().method4)
+			running_loss += loss.item()
+			total_samples += src.size(0)
+
 	end = time.time()
-	print(f'Time: {end-start}, Loss: {running_loss/len(data)}')
+	avg_bleu_score = bleu_score / total_samples  # Average BLEU over all samples
+	print(f'Time: {end - start}, Loss: {running_loss / len(data)}, BLEU: {avg_bleu_score}')
 
 
-sample_rng = torch.Generator(device=device)
-sample_rng.manual_seed(42 + 1203)
-def generate(model, sentence, tokenizer, device, generator):
-	model.eval()
-	sentence = tokenizer(sentence, return_tensors='pt', padding='max_length', truncation=True, max_length=128)
-	with torch.no_grad():
-		_, generated_token = model(sentence['input_ids'].to(device))
-		# topk_pros, topk_ids  = predict.topk(5, dim=-1)
-		# ix = torch.multinomial(topk_pros, num_samples=1, generator=generator) # sample from the topk_pros
-		# xcol = torch.gather(topk_ids, -1, ix) # gather the topk_ids with the index ix
-	return generated_token
-
-# print(tokenizer.batch_decode(generate(model, "Hello", tokenizer, device, sample_rng), "Sure"))
+evaluation(model, valid_loader, critertion, device)
